@@ -11,25 +11,39 @@ class Solution {
     int findCity(int n, int m, vector<vector<int>>& edges, int threshold) 
     {
         vector<pair<int, int>> graph[n];
-        vector<vector<long long>> distances(n, vector<long long> (n, 1e18));
-        for(int i = 0; i < n; i++)
-            distances[i][i] = 0;
+        vector<vector<int>> distances;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int , int>>> pq;
+        
         for(int i = 0; i < m; i++)
         {
             int u = edges[i][0], v = edges[i][1], wt = edges[i][2];
-            if(distances[u][v] > wt)
-                distances[u][v] = wt;
-            if(distances[v][u] > wt)
-                distances[v][u] = wt;
             graph[u].push_back({v, wt});
             graph[v].push_back({u, wt});
         }
         
-        
-        for(int via = 0; via < n; via++)
-            for(int i = 0; i < n; i++)
-                for(int j = 0; j < n; j++)
-                    distances[i][j] = min(distances[i][j], distances[i][via] + distances[via][j]);
+        for(int city = 0; city < n; city++)
+        {
+            vector<int> dist(n, 1e8);
+            dist[city] = 0;
+            pq.push({0, city});
+            
+            while(!pq.empty())
+            {
+                auto front = pq.top();
+                pq.pop();
+                int wt = front.first, node = front.second;
+                
+                for(auto &it : graph[node])
+                {
+                    if(wt + it.second < dist[it.first])
+                    {
+                        dist[it.first] = wt + it.second;
+                        pq.push({dist[it.first], it.first});
+                    }
+                }
+            }
+            distances.push_back(dist);
+        }
         
         int city = -1, minmCnt = n + 1;
         
