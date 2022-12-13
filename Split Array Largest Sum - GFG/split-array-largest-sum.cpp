@@ -21,17 +21,17 @@ class Solution {
         }
         if(k >= count)
         {
-            int currSum = 0;
-            int currMin = -1;
-            for(int i = 0; i < n; i++)
-            {
-                if(currSum + arr[i] <= mid)
-                    currSum += arr[i];
-                else
-                    currSum = arr[i];
-                currMin = max(currMin, currSum);
-            }
-            minmSum = min(minmSum, currMin);
+            // int currSum = 0;
+            // int currMin = -1;
+            // for(int i = 0; i < n; i++)
+            // {
+            //     if(currSum + arr[i] <= mid)
+            //         currSum += arr[i];
+            //     else
+            //         currSum = arr[i];
+            //     currMin = max(currMin, currSum);
+            // }
+            // minmSum = min(minmSum, currMin);
             return true;
         }
         return false;
@@ -55,7 +55,8 @@ class Solution {
                 lo = mid + 1;
         }
         
-        return minmSum;
+        return ans;
+        // return minmSum;
     }
 };
 
