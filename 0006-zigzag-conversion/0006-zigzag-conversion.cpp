@@ -37,10 +37,14 @@ public:
         
         for(int i = 0; i < numRows; i++)
         {
+            if(ans.length() == n)
+                    break;
             for(int j = 0; j < 1000; j++)
             {
                 if(temp[i][j] == '#')
                     continue;
+                if(ans.length() == n)
+                    break;
                 ans.push_back(temp[i][j]);
             }
         }
