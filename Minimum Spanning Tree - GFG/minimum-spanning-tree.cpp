@@ -3,6 +3,45 @@
 using namespace std;
 
 // } Driver Code Ends
+
+class DisjointSet
+{
+    vector<int> parent, rank;
+    public:
+    DisjointSet(int n)
+    {
+        rank.resize(n, 0);
+        parent.resize(n);
+        for(int i = 0; i < n; i++)
+            parent[i] = i;
+    }
+    
+    int find_par(int node)
+    {
+        if(node == parent[node])
+            return node;
+        return parent[node] = find_par(parent[node]);
+    }
+    
+    void unionByRank(int u, int v)
+    {
+        int par_u = find_par(u);
+        int par_v = find_par(v);
+        if(par_u == par_v)
+            return;
+        if(rank[par_u] < rank[par_v])
+            parent[par_u] = par_v;
+        else if(rank[par_v] < rank[par_u])
+            parent[par_v] = par_u;
+        else
+        {
+            parent[par_v] = par_u;
+            rank[par_u]++;
+        }
+    }
+    
+};
+
 class Solution
 {
 	public:
@@ -10,31 +49,31 @@ class Solution
     int spanningTree(int v, vector<vector<int>> adj[])
     {
         // code here
-        vector<bool> mstVisited(v, false);
-        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
-        pq.push({0, 0});
-        int totalCost = 0;
-        
-        while(!pq.empty())
+        DisjointSet ds(v);
+        vector<vector<int>> edges;
+        for(int i = 0; i < v; i++)
         {
-            auto top = pq.top();
-            pq.pop();
-            int dis = top[0], node = top[1];
-            
-            if(mstVisited[node] == false)
+            for(auto &it : adj[i])
             {
-                totalCost += dis;
-                mstVisited[node] = true;
-                for(auto &it : adj[node])
-                {
-                    int childNode = it[0], wt = it[1];
-                    if(!mstVisited[childNode])
-                        pq.push({wt, childNode});
-                }
+                int child = it[0], wt = it[1];
+                edges.push_back({wt, i, child});
             }
         }
         
-        return totalCost;
+        sort(edges.begin(), edges.end());
+        int mstWeight = 0;
+        
+        for(int i = 0; i < edges.size(); i++)
+        {
+            int wt = edges[i][0], u = edges[i][1], v = edges[i][2];
+            if(ds.find_par(u) != ds.find_par(v))
+            {
+                ds.unionByRank(u, v);
+                mstWeight += wt;
+            }
+        }
+        
+        return mstWeight;
     }
 };
 
