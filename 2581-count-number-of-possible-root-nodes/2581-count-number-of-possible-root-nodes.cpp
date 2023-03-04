@@ -27,8 +27,6 @@ class Solution
         {
             if (child == par)
                 continue;
-            if (curr == k)
-                return;
             dfs(child, graph, parent, node, k, curr);
         }
         mp[s] = curr - original;
