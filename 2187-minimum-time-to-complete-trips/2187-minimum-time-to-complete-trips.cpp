@@ -2,11 +2,11 @@ class Solution {
     
     bool check(vector<int>& time, int totalTrips, long long maxTime)
     {
-        long long currTrips = 0;
+        long long tripCount = 0;
         for(int i = 0; i < time.size(); i++)
         {
-            currTrips += (maxTime / time[i]);
-            if(currTrips >= totalTrips)
+            tripCount += (maxTime / time[i]);
+            if(tripCount >= totalTrips)
                 return true;
         }
             
