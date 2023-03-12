@@ -13,22 +13,24 @@ public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         ListNode* dummyHead = new ListNode(-100000);
         ListNode* temp = dummyHead;
-        priority_queue<int, vector<int>, greater<int>> pq;
+         
+        priority_queue<pair<int, ListNode*>, vector<pair<int, ListNode*>>, greater<pair<int, ListNode*>>> pq;
         
         for(int i = 0; i < lists.size(); i++)
         {
             ListNode* temp = lists[i];
             while(temp)
             {
-                pq.push(temp->val);
+                pq.push({temp->val, temp});
                 temp = temp->next;
             }
         }
         
         while(!pq.empty())
         {
-            int top = pq.top(); pq.pop();
-            temp->next = new ListNode(top);
+            auto top = pq.top(); pq.pop();
+            auto address = top.second;
+            temp->next = address;
             temp = temp->next;
         }
         
