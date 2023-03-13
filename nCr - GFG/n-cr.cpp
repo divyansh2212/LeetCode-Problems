@@ -25,9 +25,24 @@ class Solution{
     
 public:
     int nCr(int n, int r){
+        if(r > n)
+            return 0;
+        vector<vector<int>> dp(n + 1, vector<int> (r + 1, 0));
+        // return solve(n, r, dp);
         
-        vector<vector<int>> dp(n + 1, vector<int> (r + 1, -1));
-        return solve(n, r, dp);
+        for(int i = 0; i <= r; i++)
+            dp[i][i] = 1;
+        for(int i = 0; i <= n; i++)
+            dp[i][0] = 1;
+            
+        for(int i = 1; i <= n; i++)
+        {
+            for(int j = 1; j <= r; j++)
+            {
+                dp[i][j] = (dp[i - 1][j - 1] + 0LL + dp[i - 1][j]) % mod;
+            }
+        }
+        return dp[n][r];
     }
 };
 
