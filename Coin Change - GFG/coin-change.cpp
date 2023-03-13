@@ -23,29 +23,30 @@ class Solution {
     
   public:
     long long int count(int coins[], int n, int sum) {
-
-        // return ways(coins, n, sum, 0);
         
-        vector<vector<long long>> dp(n + 1, vector<long long> (sum + 1, 0));
+        // vector<vector<long long>> dp(n + 1, vector<long long> (sum + 1, 0));
+        vector<long long> next(sum + 1, 0);
         
-        for(int i = 0; i < n; i++)
-            dp[i][0] = 1;
+        next[0] = 1;
             
         for(int idx = n - 1; idx >= 0; idx--)
         {
+            vector<long long> curr(sum + 1, 0);
+            curr[0] = 1;
             for(int target = 1; target <= sum; target++)
             {
-                long long way1 = dp[idx + 1][target];
+                long long way1 = next[target];
                 long long way2 = 0;
         
                 if(target >= coins[idx])
-                    way2 = dp[idx][target - coins[idx]];
+                    way2 = curr[target - coins[idx]];
         
-                dp[idx][target] = way1 + way2;
+                curr[target] = way1 + way2;
             }
+            next = curr;
         }
         
-        return dp[0][sum];
+        return next[sum];
     }
 };
 
