@@ -11,24 +11,24 @@
  */
 class Solution {
     
-    void traversal(TreeNode* root, vector<int> &numbers, int num)
+    void traversal(TreeNode* root, int &sum, int num)
     {
         num = (num * 10) + root->val;
         if(root->left == NULL && root->right == NULL)
         {
-            numbers.push_back(num);
+            sum += num;
             return;
         }
         if(root->left)
-            traversal(root->left, numbers, num);
+            traversal(root->left, sum, num);
         if(root->right)
-            traversal(root->right, numbers, num);
+            traversal(root->right, sum, num);
     }
     
 public:
     int sumNumbers(TreeNode* root) {
-        vector<int> numbers;
-        traversal(root, numbers, 0);
-        return accumulate(numbers.begin(), numbers.end(), 0);
+        int sum = 0;
+        traversal(root, sum, 0);
+        return sum;
     }
 };
