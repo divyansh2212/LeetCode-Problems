@@ -1,4 +1,14 @@
-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
     bool isCompleteTree(TreeNode* root) {
@@ -6,12 +16,17 @@ public:
         q.push(root);
         
         bool foundNull = false;
+        
         while(!q.empty())
         {
             auto top = q.front();
             q.pop();
+            
             if(top == NULL)
+            {
                 foundNull = true;
+            }
+            
             else
             {
                 if(foundNull)
@@ -19,6 +34,7 @@ public:
                 q.push(top->left);
                 q.push(top->right);
             }
+            
         }
         
         return true;
