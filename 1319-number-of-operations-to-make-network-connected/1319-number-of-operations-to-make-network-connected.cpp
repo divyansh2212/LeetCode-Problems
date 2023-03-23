@@ -1,65 +1,41 @@
-
-class DisjointSet{
-      
-        vector<int> rank, parent;
-        
-        public:
-        DisjointSet(int n)
-        {
-            parent.resize(n);
-            rank.resize(n, 0);
-            
-            for(int i = 0; i < n; i++)
-                parent[i] = i;
-        }
-        
-        int find_par(int node)
-        {
-            if(node == parent[node])
-                return node;
-            return parent[node] = find_par(parent[node]);
-        }
-        
-        void unionByRank(int u, int v)
-        {
-            u = find_par(u), v = find_par(v);
-            if(u == v)
-                return;
-            
-            if(rank[u] < rank[v])
-                parent[u] = v;
-            
-            else if(rank[u] > rank[v])
-                parent[v] = u;
-            
-            else{
-                rank[v]++;
-                parent[u] = v;
-            }
-        }
-    };
-
 class Solution {
+    
+    void dfs(int vtx, vector<int> graph[], vector<bool> &visited)
+    {
+        visited[vtx] = true;
+            
+        for(auto &it : graph[vtx])
+        {
+            if(visited[it])
+                continue;
+            dfs(it, graph, visited);
+        }
+    }
     
 public:
     int makeConnected(int n, vector<vector<int>>& connections) {
-        int edges = connections.size();
-        if(edges < n - 1)
+        
+        if(connections.size() < n - 1)
             return -1;
         
-        DisjointSet ds(n);
-        
+        vector<int> graph[n];
         for(int i = 0; i < connections.size(); i++)
         {
             int u = connections[i][0], v = connections[i][1];
-            ds.unionByRank(u, v);
+            graph[u].push_back(v);
+            graph[v].push_back(u);
         }
         
-        int components = 0;
+        int ccs = 0;
+        vector<bool> visited(n, false);
         for(int i = 0; i < n; i++)
-            if(ds.find_par(i) == i)
-                components++;
+        {
+            if(visited[i])
+                continue;
+            dfs(i, graph, visited);
+            ccs++;
+        }
         
-        return components - 1;
+        return ccs - 1;
     }
 };
