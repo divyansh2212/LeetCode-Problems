@@ -16,29 +16,23 @@ public:
     {
         int n = nums.size();
 
-        int last = 0;
-        unordered_set<int> st;
+        int x;
 
-        for (int i = 0; i < n; i++)
+        for (x = 1; x <= n + 1;)
         {
-            if (nums[i] < 0)
-                continue;
-            if (nums[i] == last + 1)
-                last++;
+            int original = x;
+            for (int i = 0; i < n; i++)
+                if (nums[i] == x)
+                    x++;
 
-            if (nums[i] > last)
-                st.insert(nums[i]);
-        }
-        
-        // int size = st.size();
-        while(1)
-        {
-            if(st.find(last + 1) != st.end())
-                last++;
-            else
+            for (int i = n - 1; i >= 0; i--)
+                if (nums[i] == x)
+                    x++;
+
+            if (x == original)
                 break;
         }
 
-        return last + 1;
+        return x;
     }
 };
