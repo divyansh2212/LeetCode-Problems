@@ -1,30 +1,27 @@
 class Solution {
     
-    int cost(int idx, vector<int>& days, vector<int>& costs, vector<int> &dp)
+    int solve(int idx, int ticketTill, vector<int>& days, vector<int>& costs, vector<vector<int>> &dp)
     {
-        if(days.size() == idx)
+        if(idx == days.size())
             return 0;
         
-        if(dp[idx] != -1)
-            return dp[idx];
+        if(dp[idx][ticketTill] != -1)
+            return dp[idx][ticketTill];
         
-        int way1 = 1e9, way2 = 1e9, way3 = 1e9;
+        if(ticketTill >= days[idx])
+            return solve(idx + 1, ticketTill, days, costs, dp);
         
-        int newIdx = upper_bound(days.begin(), days.end(), days[idx]) - days.begin();
-        way1 = costs[0] + cost(newIdx, days, costs, dp);
+        int way1 = costs[0] + solve(idx + 1, days[idx], days, costs, dp);
+        int way2 = costs[1] + solve(idx + 1, days[idx] + 6, days, costs, dp);
+        int way3 = costs[2] + solve(idx + 1, days[idx] + 29, days, costs, dp);
         
-        newIdx = upper_bound(days.begin(), days.end(), days[idx] + 6) - days.begin();
-        way2 = costs[1] + cost(newIdx, days, costs, dp);
-            
-        newIdx = upper_bound(days.begin(), days.end(), days[idx] + 29) - days.begin();
-        way3 = costs[2] + cost(newIdx, days, costs, dp);    
-        
-        return dp[idx] = min({way1, way2, way3});
+        return dp[idx][ticketTill] = min(way1, min(way2, way3));
     }
     
 public:
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        vector<int> dp(days.size(), -1);
-        return cost(0, days, costs, dp);
+        
+        vector<vector<int>> dp(500, vector<int> (500, -1));
+        return solve(0, 0, days, costs, dp);
     }
 };
