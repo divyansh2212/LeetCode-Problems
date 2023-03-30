@@ -18,9 +18,8 @@ class Solution
             {
                 int start = i;
                 while(i < n && a[start] % 2 == a[i] % 2)
-                {
                     i++;
-                }
+                    
                 sort(a.begin() + start, a.begin() + i);
                 reverse(a.begin() + start, a.begin() + i);
             }
