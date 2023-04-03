@@ -8,7 +8,7 @@ using namespace std;
 
 class Solution{
     
-    bool solve(int currSum, int a[], int &n, int k, vector<bool> visited, int &eachPart)
+    bool solve(int currSum, int a[], int &n, int k, vector<bool> &visited, int &eachPart)
     {
         if(k == 1)
         {
@@ -43,7 +43,6 @@ class Solution{
   public:
     bool isKPartitionPossible(int a[], int n, int k)
     {
-         //Your code here
          if(k == 1)
             return true;
          
