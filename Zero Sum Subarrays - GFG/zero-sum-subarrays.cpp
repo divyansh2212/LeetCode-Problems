@@ -12,17 +12,17 @@ class Solution{
 public:
     //Function to count subarrays with sum equal to 0.
     long long int findSubarray(vector<long long int> &arr, int n ) {
-        map<long long, long long> sumTrack;
-        long long ans = 0, currSum = 0;
+        //code here
+        long long ans = 0;
+        unordered_map<long long, int> hashTable;
+        hashTable[0]++;
         
-        for(auto &x : arr)
+        long long curr = 0;
+        for(int i = 0; i < n; i++)
         {
-            currSum += x;
-            ans += sumTrack[currSum];
-            
-            if(currSum == 0)
-                ans++;
-            sumTrack[currSum]++;
+            curr += arr[i];
+            ans += hashTable[curr];
+            hashTable[curr]++;
         }
         
         return ans;
