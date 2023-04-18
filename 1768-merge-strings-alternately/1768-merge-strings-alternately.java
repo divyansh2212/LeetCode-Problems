@@ -3,33 +3,21 @@ class Solution {
         String ans = "";
         
         int i = 0, j = 0;
-        int count = 0;
         
         while(i < word1.length() && j < word2.length())
         {
-            if(count % 2 == 0)
-            {
-                ans = ans + word1.charAt(i);
-                i++;
-            }
-            else
-            {
-                ans = ans + word2.charAt(j);
-                j++;
-            }
-            count++;
+            ans = ans + word1.charAt(i++);
+            ans = ans + word2.charAt(j++);
         }
         
         while(i < word1.length())
         {
-            ans = ans + word1.charAt(i);
-            i++;
+            ans = ans + word1.charAt(i++);
         }
         
         while(j < word2.length())
         {
-            ans = ans + word2.charAt(j);
-            j++;
+            ans = ans + word2.charAt(j++);
         }
         
         return ans;
