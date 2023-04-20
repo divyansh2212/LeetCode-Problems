@@ -86,10 +86,8 @@ Node* buildTree(string str)
 // } Driver Code Ends
 
 class Solution{
-    
-    Node* homeAddress;
 
-    void travel(Node* root, Node* parent, unordered_map<Node*, Node*> &parentmp, int &home)
+    void travel(Node* root, Node* parent, unordered_map<Node*, Node*> &parentmp, Node* &homeAddress, int &home)
     {
         if(root == NULL)
             return;
@@ -97,9 +95,9 @@ class Solution{
             homeAddress = root;
         parentmp[root] = parent;
         if(root->left)
-            travel(root->left, root, parentmp, home);
+            travel(root->left, root, parentmp, homeAddress, home);
         if(root->right)
-            travel(root->right, root, parentmp, home);
+            travel(root->right, root, parentmp, homeAddress, home);
     }
     
     int dfs(Node* root, unordered_map<Node*, Node*> &parentmp, int k, unordered_set<int> &st)
@@ -121,11 +119,14 @@ class Solution{
     public:
     int ladoos(Node* root, int home, int k)
     {
+        Node* homeAddress;
         unordered_map<Node*, Node*> parentmp;
-        travel(root, NULL, parentmp, home);
- 
+        travel(root, NULL, parentmp, homeAddress, home);
+        
+        // int ans = 0;
         unordered_set<int> st;
         return dfs(homeAddress, parentmp, k, st);
+        // return 0;
     }
 
 
