@@ -1,9 +1,3 @@
-// Jai Shree Babosa!
-
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -15,28 +9,30 @@ using namespace std;
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution
-{
+    
+// root left right
+
+class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode *root)
-    {
-        if (root == NULL)
-            return {};
-
-        stack<TreeNode *> st;
+    vector<int> preorderTraversal(TreeNode* root) {
         vector<int> ans;
+        if(root == NULL) return ans;
+        
+        stack<TreeNode*> st;
         st.push(root);
-
-        while (!st.empty())
+        
+        while(!st.empty())
         {
-            auto top = st.top();
-            st.pop();
+            auto top = st.top(); st.pop();
             ans.push_back(top->val);
-            if (top->right)
+            
+            if(top->right)
                 st.push(top->right);
-            if (top->left)
+            
+            if(top->left)
                 st.push(top->left);
         }
+        
         return ans;
     }
 };
