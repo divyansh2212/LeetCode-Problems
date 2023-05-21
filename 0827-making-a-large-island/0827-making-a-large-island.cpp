@@ -40,9 +40,9 @@ class DisjointSet{
 
 class Solution {
     
-    bool isValid (int x, int y, int n)
+    bool isValid (int x, int y, int n, vector<vector<int>>& grid)
     {
-        return x >= 0 && y >= 0 && x < n && y < n;
+        return x >= 0 && y >= 0 && x < n && y < n && grid[x][y];
     }
     
 public:
@@ -59,11 +59,11 @@ public:
                     
                     int id = (n * i) + j;
                     
-                    if(i - 1 >= 0 && grid[i - 1][j] == 1) {
+                    if(isValid(i - 1, j, n, grid)) {
                         int adjId = (n * (i - 1)) + j;
                         ds.unionBySize(id, adjId);
                     }
-                    if(j - 1 >= 0 && grid[i][j - 1] == 1) {
+                    if(isValid(i, j - 1, n, grid)) {
                         int adjId = (n * i) + j - 1;
                         ds.unionBySize(id, adjId);
                     }
@@ -80,7 +80,7 @@ public:
                     set<int> uniqueParents;
                     for(int d = 0; d < 4; d++) {
                         int x = i + dx[d], y = j + dy[d];
-                        if(isValid(x, y, n) && grid[x][y]) {
+                        if(isValid(x, y, n, grid)) {
                             int id = x * n + y;
                             uniqueParents.insert(ds.find_par(id));
                         }
