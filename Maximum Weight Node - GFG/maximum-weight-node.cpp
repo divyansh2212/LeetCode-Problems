@@ -10,26 +10,26 @@ class Solution
   public:
   int maxWeightCell(int n, vector<int> edge)
   {
-      // code here
-      int ans = 0, ansIdx = 0;
-      vector<int> hash(n, 0);
+      vector<long long> weights(n, 0);
       for(int i = 0; i < n; i++)
       {
-        if(edge[i] == -1)
+          if(edge[i] == -1)
             continue;
         
-        hash[edge[i]] += i;
-        
-        if(hash[edge[i]] > ans)
-        {
-            ans = hash[edge[i]];
-            ansIdx = edge[i];
-        }
-        else if(ans == hash[edge[i]])
-            ansIdx = max(ansIdx, edge[i]);
+        weights[edge[i]] += i;
       }
       
-      return ansIdx;
+      int ansNode = 0;
+      long long maxWeight = -1;
+      for(int i = 0; i < n; i++)
+      {
+          if(weights[i] >= maxWeight){
+              maxWeight = weights[i];
+              ansNode = i;
+          }
+      }
+      
+      return ansNode;
   }
 };
 
