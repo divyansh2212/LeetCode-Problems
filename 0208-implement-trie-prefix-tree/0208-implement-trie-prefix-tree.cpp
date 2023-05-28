@@ -1,20 +1,21 @@
 class Node{
-    private:
+  
     Node* links[26];
     bool flag = false;
     
     public:
-    bool containsKey(char ch)
+    
+    bool contains(char ch)
     {
-        return links[ch - 'a'] != NULL;
+        return (links[ch - 'a'] != NULL);
     }
     
-    void put(char ch)
+    void put (char ch, Node* node)
     {
-        links[ch - 'a'] = new Node();
+        links[ch - 'a'] = node;
     }
     
-    Node* get(char ch)
+    Node* next(char ch)
     {
         return links[ch - 'a'];
     }
@@ -28,11 +29,11 @@ class Node{
     {
         return flag;
     }
+    
 };
 
 class Trie {
     
-    private:
     Node* root;
     
 public:
@@ -42,53 +43,58 @@ public:
     
     void insert(string word) {
         
+        int n = word.length();
         Node* temp = root;
-        for(int i = 0; i < word.length(); i++)
+        
+        for(int i = 0; i < n; i++) 
         {
-            if(temp->containsKey(word[i]) == false)
-                temp->put(word[i]);
+            char ch = word[i];
             
-            temp = temp->get(word[i]);
+            if(temp->contains(ch) == false)
+                temp->put(ch, new Node());
+            
+            temp = temp->next(ch);
         }
         
         temp->setEnd();
     }
     
     bool search(string word) {
-        Node *temp = root;
         
-        for(int i = 0; i < word.length(); i++)
-        {
-            if(temp->containsKey(word[i]) == false)
-                return false;
-            temp = temp->get(word[i]);
-        }
-        
-        if(temp->isEnd())
-            return true;
-        
-        return false;
-    }
-    
-    bool startsWith(string prefix) {
-        
+        int n = word.length();
         Node* temp = root;
         
-        for(int i = 0; i < prefix.length(); i++)
+        for(int i = 0; i < n; i++)
         {
-            if(temp->containsKey(prefix[i]) == false)
+            char ch = word[i];
+            
+            if(temp->contains(ch) == false)
                 return false;
-            temp = temp->get(prefix[i]);
+            
+            temp = temp->next(ch);
+        }
+        
+        if(temp->isEnd() == true)
+            return true;
+        else
+            return false;
+    }
+    
+    bool startsWith(string prefix) 
+    {
+        int n = prefix.length();
+        
+        Node* node = root;
+        
+        for(int i = 0; i < n; i++)
+        {
+            char ch = prefix[i];
+            if(node->contains(ch) == false)
+                return false;
+            
+            node = node->next(ch);
         }
         
         return true;
     }
 };
-
-/**
- * Your Trie object will be instantiated and called as such:
- * Trie* obj = new Trie();
- * obj->insert(word);
- * bool param_2 = obj->search(word);
- * bool param_3 = obj->startsWith(prefix);
- */
