@@ -6,7 +6,7 @@ public:
         if(num1 == 0)
             return 0;
         
-        for(int i = 1; i <= 500; i++)
+        for(int i = 1; i <= 1e5; i++)
         {
             long long number = i *1LL* num2;
             long long reqd = num1 - number;
