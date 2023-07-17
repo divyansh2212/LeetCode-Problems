@@ -1,27 +1,20 @@
-class Solution
-{
+class Solution {
 public:
-    int firstMissingPositive(vector<int> &nums)
-    {
+    int firstMissingPositive(vector<int>& nums) {
         int n = nums.size();
-
-        int x;
-
-        for (x = 1; x <= n + 1;)
-        {
-            int original = x;
-            for (int i = 0; i < n; i++)
-                if (nums[i] == x)
-                    x++;
-
-            for (int i = n - 1; i >= 0; i--)
-                if (nums[i] == x)
-                    x++;
-
-            if (x == original)
-                break;
+        vector<int> hashTable(n + 1, 0);
+        for(int i = 0; i < n; i++) {
+            if(nums[i] >= 1 && nums[i] <= n) {
+                hashTable[nums[i]]++;
+            }
         }
-
-        return x;
+        
+        for(int i = 1; i <= n; i++) {
+            if(hashTable[i] == 0) {
+                return i;
+            }
+        }
+        
+        return n + 1;
     }
 };
