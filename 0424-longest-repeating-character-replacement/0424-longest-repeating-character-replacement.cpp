@@ -1,36 +1,30 @@
 class Solution {
 public:
     int characterReplacement(string s, int k) {
+        
         int n = s.length();
-        int ans = max(1, k);
         
-        vector<int> hsh(26, 0);
+        int ans = 1;
         
-        int i = 0, j = 0;
-        
-        while(j < n)
+        for(char ch = 'A'; ch <= 'Z'; ch++)
         {
-            hsh[s[j] - 'A']++;
+            int available = k;
+            int i = 0, j = 0;
             
-            int mx = 0, total = 0;
-            for(int k = 0; k < 26; k++)
+            while(j < n)
             {
-                if(hsh[k] == 0)
-                    continue;
-                mx = max(mx, hsh[k]);
-                total += hsh[k];
-            }
-            
-            if(total - mx <= k)
-            {
+                if(s[j] != ch) {
+                    available--;
+                }
+                while(available < 0) {
+                    if(s[i] != ch) {
+                        available++;
+                    }
+                    i++;
+                }
                 ans = max(ans, j - i + 1);
+                j++;
             }
-            else
-            {
-                hsh[s[i] - 'A']--;
-                i++;
-            }
-            j++;
         }
         
         return ans;
