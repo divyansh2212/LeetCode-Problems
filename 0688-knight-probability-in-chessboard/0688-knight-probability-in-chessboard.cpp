@@ -21,7 +21,8 @@ class Solution {
         for(int d = 0; d < 8; d++) {
             
             int x = i + dx[d], y = j + dy[d];
-            ans += (calc(n, k - 1, x, y) / 8.0);   
+            if(x >= 0 && y >= 0 && x < n && y < n)
+                ans += (calc(n, k - 1, x, y) / 8.0);   
         }
         
         return dp[{i, j, k}]=ans;
