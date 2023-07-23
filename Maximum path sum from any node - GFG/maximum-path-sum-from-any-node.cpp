@@ -90,7 +90,7 @@ class Solution {
         int lt = solve(root->left, ans);
         int rt = solve(root->right, ans);
         
-        ans = max({lt + rt + root->data, root->data, ans});
+        ans = max(lt + rt + root->data, ans);
         
         return max(0, max(lt, rt) + root->data);
     }
