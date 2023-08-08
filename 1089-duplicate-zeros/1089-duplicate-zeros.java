@@ -5,9 +5,6 @@ class Solution {
         
         for(int i = 0; i < n; i++)
         {
-            if(list.size() == n) {
-                break;
-            }
             if(arr[i] != 0) {
                 list.add(arr[i]);
             }
