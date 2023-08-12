@@ -4,7 +4,7 @@ public:
         int n = hand.size();
         sort(hand.begin(), hand.end());
         
-        multiset<int> st;
+        unordered_multiset<int> st;
         for(int i = 0; i < n; i++) {
             st.insert(hand[i]);
         }
