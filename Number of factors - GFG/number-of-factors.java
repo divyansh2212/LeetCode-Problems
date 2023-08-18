@@ -24,14 +24,23 @@ class GFG
 //User function Template for Java
 class Solution{
     static int countFactors(int n) {
-        int count = 0;
-        for(int i = 1; i <= n; i++)
+        ArrayList<Integer> factors = new ArrayList<>();
+        int sqrt = (int)Math.sqrt(n);
+        for(int i = 1; i <= sqrt; i++)
         {
-            if(n % i == 0) {
-                count++;
+            if(n % i == 0) 
+            {
+                factors.add(i);
+                if((n/i) != i) 
+                {
+                    factors.add(n/i);
+                }
             }
         }
         
-        return count;
+        // for(int x : factors)
+        //     System.out.print(x + " ");
+        
+        return factors.size();
     }
 }
