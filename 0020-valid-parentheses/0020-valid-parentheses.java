@@ -7,8 +7,16 @@ class Solution {
         for(int i = 0; i < n; i++)
         {
             char ch = str.charAt(i);
+            
+            // open brackets
             if(ch == '(') {
                 st.push(ch);    
+            }
+            else if(ch == '[') {
+                st.push(ch);  
+            }
+            else if(ch == '{') {
+                st.push(ch);  
             }
             
             else if(ch == ')') {
@@ -20,9 +28,6 @@ class Solution {
                 else {
                     return false;
                 }
-            }
-            else if(ch == '[') {
-                st.push(ch);  
             }
             
             else if(ch == ']') {
@@ -36,10 +41,6 @@ class Solution {
                 }
             }
             
-            else if(ch == '{') {
-                st.push(ch);  
-            }
-            
             else if(ch == '}') {
                 if(st.size() == 0)
                     return false;
@@ -51,11 +52,6 @@ class Solution {
             }
         }
         
-        if(st.size() == 0) {
-            return true;
-        }
-        else {
-            return false;   
-        }
+        return (st.size() == 0);
     }
 }
