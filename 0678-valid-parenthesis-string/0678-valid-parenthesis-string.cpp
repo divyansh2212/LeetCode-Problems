@@ -32,8 +32,37 @@ class Solution {
 public:
     bool checkValidString(string s) {
         int n = s.length();
-        int open = 0;
+//         int open = 0;
         
-        return solve(0, s, open);
+//         return solve(0, s, open);
+        
+        stack<int> open, star;
+        
+        for(int i = 0; i < n; i++) {
+            if(s[i] == '(') {
+                open.push(i);
+            }
+            else if(s[i] == ')') {
+                if(open.size())
+                    open.pop();
+                else if(star.size())
+                    star.pop();
+                else
+                    return false;
+            }
+            else
+                star.push(i);
+        }
+        
+        while(open.size()) {
+            if(star.size() == 0)
+                return false;
+            if(star.top() < open.top())
+                return false;
+            star.pop();
+            open.pop();
+        }
+        
+        return true;
     }
 };
