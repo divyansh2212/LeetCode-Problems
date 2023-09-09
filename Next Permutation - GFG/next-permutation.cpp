@@ -32,7 +32,7 @@ public:
             }
         }
         
-        sort(arr.begin() + idx + 1, arr.end());
+        reverse(arr.begin() + idx + 1, arr.end());
         
         return arr;
     }
