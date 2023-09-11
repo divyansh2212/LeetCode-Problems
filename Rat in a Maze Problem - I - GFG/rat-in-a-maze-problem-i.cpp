@@ -10,48 +10,38 @@ using namespace std;
 
 class Solution{
     
-    vector<int> dx = {-1, 0, 1, 0};
-    vector<int> dy = {0, 1, 0, -1};
-    
-    void dfs(int i, int j, vector<vector<int>> &mat, vector<string> &ans, string curr)
+    void solve(int x, int y, vector<vector<int>> &mat, vector<string> &ans, string &curr)
     {
         int n = mat.size();
-        
-        if(i < 0 || j < 0 || i == n || j == n || mat[i][j] == 0)
+        if(x  == n || y == n || x < 0 || y < 0 || mat[x][y] == 0)
             return;
-        
-        if(i == n - 1 && j == n - 1)
-        {
+        if(x == n - 1 && y == n - 1) {
             ans.push_back(curr);
             return;
         }
         
-        mat[i][j] = 0;
-        
-        for(int d = 0; d < 4; d++)
-        {
-            if(dx[d] == 1)
-                curr.push_back('D');
-            else if(dx[d] == -1)
-                curr.push_back('U');
-            else if(dy[d] == 1)
-                curr.push_back('R');
-            else if(dy[d] == -1)
-                curr.push_back('L');
-            dfs(i + dx[d], j + dy[d], mat, ans, curr);
-            curr.pop_back();
-        }
-        
-        mat[i][j] = 1;
+        mat[x][y] = 0;
+        curr.push_back('D');
+        solve(x + 1, y, mat, ans, curr);
+        curr.pop_back();
+        curr.push_back('R');
+        solve(x, y+1, mat, ans, curr);
+        curr.pop_back();
+        curr.push_back('U');
+        solve(x-1, y, mat, ans, curr);
+        curr.pop_back();
+        curr.push_back('L');
+        solve(x, y-1, mat, ans, curr);
+        curr.pop_back();
+        mat[x][y] = 1;
     }
     
     public:
-    vector<string> findPath(vector<vector<int>> &mat, int n) {
-        
+    vector<string> findPath(vector<vector<int>> &m, int n) {
         vector<string> ans;
         string curr = "";
         
-        dfs(0, 0, mat, ans, curr);
+        solve(0, 0, m, ans, curr);
         
         return ans;
     }
