@@ -10,12 +10,6 @@ using namespace std;
 class Solution {
     
     int kadane(vector<int> &arr) {
-        int mini = INT_MIN;
-        for(int i = 0; i < arr.size(); i++) {
-            mini = max(mini, arr[i]);
-        }
-        if(mini <= 0)
-            return mini;
             
         int i = 0;
         int sum = 0;
