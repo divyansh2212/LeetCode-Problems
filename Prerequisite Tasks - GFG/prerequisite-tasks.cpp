@@ -14,9 +14,6 @@ class Solution {
                 ans = false;
             }
             else if(!visited[it]) {
-                if(pathVisited[it])
-                    ans = false;
-                    else
                 dfs(it, adj, visited, pathVisited, ans);
             }
         }
