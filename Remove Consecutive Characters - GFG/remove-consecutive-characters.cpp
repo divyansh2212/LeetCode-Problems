@@ -5,21 +5,20 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution{
+    
+    string solve(string &s, int idx) {
+        if(idx == s.length())
+            return "";
+        if(idx == 0 || (idx > 0 && s[idx] != s[idx - 1])) {
+            return s[idx] + solve(s, idx + 1);
+        }
+        return solve(s, idx + 1);
+    }
+    
     public:
     string removeConsecutiveCharacter(string s)
     {
-        // code here.
-        string ans = "";
-        ans.push_back(s[0]);
-        
-        for(int i = 1; i < s.length(); i++)
-        {
-            if(s[i] == s[i - 1])
-                continue;
-            ans.push_back(s[i]);
-        }
-        
-        return ans;
+        return solve(s, 0);
     }
 };
 
