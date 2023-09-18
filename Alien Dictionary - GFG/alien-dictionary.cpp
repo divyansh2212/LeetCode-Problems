@@ -9,62 +9,62 @@ using namespace std;
 
 class Solution{
     
-    vector<int> topologicalSort(vector<int> graph[], int &k)
-    {
-        vector<int> inDegrees(k, 0);
-        vector<int> topo;
-        
-        for(int i = 0; i < k; i++)
-            for(auto &it : graph[i])
-                inDegrees[it]++;
-        
+    vector<int> topologicalSort(vector<int> graph[]) {
+        vector<int> ans;
+        unordered_map<int, int> indegrees;
         queue<int> q;
-        for(int i = 0; i < k ; i++) {
-            if(inDegrees[i] == 0) {
+        
+        for(int i = 0; i < 26; i++) {
+            for(auto &it : graph[i]) {
+                indegrees[it]++;
+            }
+        }
+        
+        for(int i = 0; i < 26; i++) {
+            if(graph[i].size() && indegrees[i] == 0) {
                 q.push(i);
             }
         }
         
-        while(!q.empty())
-        {
-            int front = q.front(); q.pop();
-            topo.push_back(front);
-            for(auto &it : graph[front]) {
-                inDegrees[it]--;
-                if(inDegrees[it] == 0) {
+        while(!q.empty()) {
+            int node = q.front();
+            q.pop();
+            ans.push_back(node);
+            for(auto &it : graph[node]) {
+                indegrees[it]--;
+                if(indegrees[it] == 0) {
                     q.push(it);
                 }
             }
         }
         
-        return topo;
+        return ans;
     }
     
     public:
     string findOrder(string dict[], int n, int k) {
         //code here
-        
-        vector<int> graph[k];
+        vector<int> graph[26];
         string ans = "";
         
         for(int i = 0; i < n - 1; i++) {
+            int j = 0;
+            int len = min(dict[i].length(), dict[i+1].length());
             
-            string str1 = dict[i];
-            string str2 = dict[i + 1];
-            
-            for(int j = 0; j < min(str1.length(), str2.length()); j++) {
-                if(str1[j] != str2[j]) {
-                    graph[str1[j] - 'a'].push_back(str2[j] - 'a');
-                    break;
+            while(j < len) {
+                if(dict[i][j] != dict[i + 1][j]) {
+                   graph[dict[i][j] - 'a'].push_back(dict[i+1][j] - 'a');
+                   break;
                 }
+                j++;
             }
         }
         
-        vector<int> topo = topologicalSort(graph, k);
-        
-        for(int i = 0; i < k; i++) {
-            ans.push_back(topo[i] + 'a');
+        vector<int> topo = topologicalSort(graph);
+        for(auto &it : topo) {
+            ans.push_back((char)('a' + it));
         }
+        // cout << ans;
         
         return ans;
     }
