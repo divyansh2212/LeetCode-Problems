@@ -103,24 +103,26 @@ struct Node
 
 class Solution{
     
-    int solve(Node* root, bool &ans)
+    int solve(Node* root, bool &flag)
     {
         if(root == NULL)
             return 0;
-        int lt = solve(root->left, ans);
-        int rt = solve(root->right, ans);
+        int lt = solve(root->left, flag);
+        int rt = solve(root->right, flag);
         if(abs(lt - rt) > 1)
-            ans = false;
-        return max(lt, rt) + 1;
+            flag = false;
+        return 1+max(lt,rt);
     }
     
     public:
     //Function to check whether a binary tree is balanced or not.
     bool isBalanced(Node *root)
     {
-        bool ans = true;
-        solve(root, ans);
-        return ans;
+        //  Your Code here
+        bool flag = true;    
+        solve(root, flag);
+        
+        return flag;
     }
 };
 
